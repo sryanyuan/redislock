@@ -7,10 +7,6 @@ import (
 )
 
 func TestSingleLock_Lock(t *testing.T) {
-	InitSingleLocker(&RedisConf{
-		Address: "localhost:6379",
-	})
-
 	wg := sync.WaitGroup{}
 
 	for i := 0; i < 10; i++ {
@@ -19,7 +15,9 @@ func TestSingleLock_Lock(t *testing.T) {
 		go func(routineId int) {
 			defer wg.Done()
 			t.Log("Routine ", routineId, "start")
-			locker := NewSingleLocker()
+			locker := NewSingleLocker(&RedisConf{
+				Address: "localhost:6379",
+			})
 
 			for {
 				if err := locker.Lock("db1", 10000); nil != err {

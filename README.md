@@ -7,15 +7,11 @@ There are 2 locker types in this package in design
 
 ### SingleLocker
 
-SingleLocker is a locker use one redis server.Before you get a locker, you need initialize it as below :
+SingleLocker is a locker use one redis server.To get a SingleLocker, you need use
 
-	InitSingleLocker(&RedisConf{
+	locker := NewSingleLocker(&RedisConf{
 		Address: "localhost:6379",
 	})
-
-Then you can get a locker
-
-	locker := NewSingleLocker()
 
 You can lock it with the lock key and timeout milliseconds. Every locker has a lock key, and if 2 locker has the same lock key and lock it at the same time, only one locker can lock success before another locker is unlock.
 
